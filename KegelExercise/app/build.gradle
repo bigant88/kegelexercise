@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -8,8 +9,8 @@ android {
         applicationId "youthstudio.com.kegelexercises"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.4"
     }
     buildTypes {
         release {
@@ -26,4 +27,11 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
+    compile 'com.thefinestartist:finestwebview:1.2.7'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
+    compile 'com.google.firebase:firebase-ads:9.0.0'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
+
 }

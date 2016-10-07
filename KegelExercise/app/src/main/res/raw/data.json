@@ -1,0 +1,9 @@
+[{"name":"Squeeze and Hold","instruction_file":"SqueezeandHold.htm","instruction_image":"squeeze.gif"},
+   {"name":"The Bridge","instruction_file":"TheBridge.htm","instruction_image":"bridge.gif"},
+   {"name":"Double Leg Raise","instruction_file":"DoubleLegRaise.htm","instruction_image":"doublelegraise.gif"},
+   {"name":"Single Leg Raise","instruction_file":"SingleLegRaise.htm","instruction_image":"singlelegraise.gif"},
+   {"name":"Reverse Crunch","instruction_file":"ReverseCrunch.htm","instruction_image":"reversecrunch.gif"},
+   {"name":"Clamshell","instruction_file":"Clamshell.htm","instruction_image":"clamshell.gif"},
+   {"name":"Flutter Kicks","instruction_file":"FlutterKicks.htm","instruction_image":"flutterkicks.gif"},
+   {"name":"Squat","instruction_file":"Squat.htm","instruction_image":"squats.gif"}
+]

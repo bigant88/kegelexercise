@@ -1,7 +1,8 @@
 package youthstudio.com.kegelexercises;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,7 @@ import android.view.ViewGroup;
 
 import android.webkit.WebView;
 
-import youthstudio.com.kegelexercises.dummy.ExerciseContent;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 public class Main2Activity extends AppCompatActivity implements ListExerciseFragment.OnListFragmentInteractionListener {
 
@@ -37,6 +38,7 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private RatingDialog mRatingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +54,35 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.imageName.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
+        mRatingDialog = new RatingDialog();
+        mRatingDialog.onCreate(this);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_2, menu);
+//        getMenuInflater().inflate(R.menu.menu_main_2, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (mRatingDialog.shouldShowAwesomePopup()) {
+            mRatingDialog.showAwesomePopup();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -87,29 +101,32 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
     }
 
     @Override
-    public void onListFragmentInteraction(ExerciseContent.ExerciseItem item) {
-
+    public void onListFragmentInteraction(ExerciseItem item, int position) {
+        Intent intent = new Intent(this, ExerciseDetailActivity.class);
+        intent.putExtra(ExerciseDetailActivity.ITEM_POSITION, position);
+        startActivity(intent);
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class HowToFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String HOW_TO_HTML_FILES = "file:///android_asset/Howto.htm";
 
-        public PlaceholderFragment() {
+        public HowToFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static HowToFragment newInstance(int sectionNumber) {
+            HowToFragment fragment = new HowToFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -122,7 +139,8 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
             View rootView = inflater.inflate(R.layout.fragment_main2, container, false);
             WebView webView = (WebView) rootView.findViewById(R.id.webview);
             webView.getSettings().setJavaScriptEnabled(false);
-            webView.loadUrl("http://vnexpress.net");
+            webView.loadUrl(HOW_TO_HTML_FILES);
+//            new FinestWebView.Builder(getActivity()).show(HOW_TO_HTML_FILES);
             return rootView;
         }
     }
@@ -140,33 +158,33 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            // Return a HowToFragment (defined as a static inner class below).
             switch (position) {
-                case 0:
-                    return PlaceholderFragment.newInstance(position + 1);
                 case 1:
+                    return HowToFragment.newInstance(position + 1);
+                case 0:
                     return ListExerciseFragment.newInstance(1);
                 case 2:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return HowToFragment.newInstance(position + 1);
             }
-            return PlaceholderFragment.newInstance(position + 1);
+            return HowToFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
-                    return getString(R.string.guides);
                 case 1:
+                    return getString(R.string.guides);
+                case 0:
                     return getString(R.string.exercises);
                 case 2:
-                    return getString(R.string.more);
+                    return getString(R.string.action_settings);
             }
             return null;
         }

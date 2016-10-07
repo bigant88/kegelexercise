@@ -10,8 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import youthstudio.com.kegelexercises.dummy.ExerciseContent;
-import youthstudio.com.kegelexercises.dummy.ExerciseContent.ExerciseItem;
+import youthstudio.com.kegelexercises.ExerciseItem;
 
 /**
  * A fragment representing a list of Items.
@@ -67,7 +66,10 @@ public class ListExerciseFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(ExerciseContent.ITEMS, mListener));
+            RecyclerView.ItemDecoration itemDecoration = new
+                    DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+            recyclerView.addItemDecoration(itemDecoration);
+            recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(RawFileReader.getInstance(context).readExerciseData(), mListener));
         }
         return view;
     }
@@ -102,6 +104,6 @@ public class ListExerciseFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(ExerciseItem item);
+        void onListFragmentInteraction(ExerciseItem item, int position);
     }
 }

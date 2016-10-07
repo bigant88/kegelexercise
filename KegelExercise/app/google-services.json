@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "135541989888",
+    "project_id": "firebase-kgapp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135541989888:android:280748fe8f47a645",
+        "android_client_info": {
+          "package_name": "youthstudio.com.kegelexercises"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM45Fe6wCbNlGjAqq6jOKlBxt4gBl4hWA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-82420226-2"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
