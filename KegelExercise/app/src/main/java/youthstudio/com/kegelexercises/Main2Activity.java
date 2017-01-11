@@ -1,26 +1,24 @@
 package youthstudio.com.kegelexercises;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.webkit.WebView;
 
-import com.thefinestartist.finestwebview.FinestWebView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 public class Main2Activity extends AppCompatActivity implements ListExerciseFragment.OnListFragmentInteractionListener {
 
@@ -39,6 +37,7 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
      */
     private ViewPager mViewPager;
     private RatingDialog mRatingDialog;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +53,29 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.imageName.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         mRatingDialog = new RatingDialog();
         mRatingDialog.onCreate(this);
+        createInterstitialAds();
+        requestNewInterstitial();
     }
 
+    private void createInterstitialAds() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(AppController.KGIA);
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                finish();
+            }
+        });
+    }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("58F1A780DB0AD902EA41C82DFC34F71E")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,10 +86,11 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
 
     @Override
     public void onBackPressed() {
-
         if (mRatingDialog.shouldShowAwesomePopup()) {
             mRatingDialog.showAwesomePopup();
-        }else {
+        } else if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
             super.onBackPressed();
         }
     }

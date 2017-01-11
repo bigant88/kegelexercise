@@ -11,7 +11,7 @@ import com.google.android.gms.analytics.Tracker;
 public class AppController extends Application {
 
     private Tracker mTracker;
-
+    public static final String KGIA = "ca-app-pub-6811776882268454/4241204523";
     @Override
     public void onCreate() {
         super.onCreate();
