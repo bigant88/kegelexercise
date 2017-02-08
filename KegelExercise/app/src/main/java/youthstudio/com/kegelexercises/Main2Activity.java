@@ -37,7 +37,7 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
      */
     private ViewPager mViewPager;
     private RatingDialog mRatingDialog;
-    private InterstitialAd mInterstitialAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,27 +55,10 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
         mTabLayout.setupWithViewPager(mViewPager);
         mRatingDialog = new RatingDialog();
         mRatingDialog.onCreate(this);
-        createInterstitialAds();
-        requestNewInterstitial();
+
     }
 
-    private void createInterstitialAds() {
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(AppController.KGIA);
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                finish();
-            }
-        });
-    }
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("58F1A780DB0AD902EA41C82DFC34F71E")
-                .build();
 
-        mInterstitialAd.loadAd(adRequest);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,8 +71,6 @@ public class Main2Activity extends AppCompatActivity implements ListExerciseFrag
     public void onBackPressed() {
         if (mRatingDialog.shouldShowAwesomePopup()) {
             mRatingDialog.showAwesomePopup();
-        } else if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
         } else {
             super.onBackPressed();
         }
